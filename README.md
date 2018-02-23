@@ -9,7 +9,7 @@ Place this in `/etc/rabbitmq/rabbitmq.config`:
 
 ```erlang
 [{rabbit,
-    [{auth_backends, [rabbit_auth_backend_uaa, rabbit_auth_backend_internal]}]},
+    [{auth_backends, [rabbit_auth_backend_uaa]}]},
  {rabbitmq_auth_backend_uaa,
     [{resource_server_id, <<"rabbitmq">>}]},
  {uaa_jwt, [
