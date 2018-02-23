@@ -1,0 +1,7 @@
+#!/bin/bash -ex
+
+git clone https://github.com/rabbitmq/rabbitmq-auth-backend-uaa --depth=1
+cd rabbitmq-auth-backend-uaa
+mix local.rebar --force
+make dist
+cp /var/build/rabbitmq-auth-backend-uaa/plugins/uaa_jwt-0.1.0.ez /mnt/
