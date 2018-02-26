@@ -8,18 +8,13 @@ def gen_jwt
     :exp => Time.new.to_i + 60,
     :scope => ['rabbitmq.read:%2F/celery'],  # %2F => /
     :aud => ['rabbitmq'],
-    :kid => 'legacy-token-key',
-    :iss => 'test',
   }
-  secret = 'secret'
-  JWT.encode payload, secret, 'HS256'
+  JWT.encode payload, 'secret', 'HS256'
 end
 
 def connect(jwt)
   conn = Bunny.new :user => jwt, :log_level => Logger::FATAL
-  conn.start
-  ch = conn.create_channel
-  ch.queue 'celery', :durable => true, :passive => true
+  conn.start.create_channel.queue 'celery', :passive => true
 end
 
 def main
