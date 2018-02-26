@@ -13,10 +13,10 @@ Place this in `/etc/rabbitmq/rabbitmq.config`:
  {rabbitmq_auth_backend_uaa,
     [{resource_server_id, <<"rabbitmq">>}]},
  {uaa_jwt, [
-  {default_key, <<"legacy-token-key">>},
+  {default_key, <<"jwt-key">>},
   {signing_keys,
     #{
-        <<"legacy-token-key">> =>
+        <<"jwt-key">> =>
             {map,
                 #{<<"kty">> => <<"MAC">>,
                   <<"value">> => <<"secret">>,
