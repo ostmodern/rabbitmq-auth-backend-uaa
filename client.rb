@@ -12,15 +12,10 @@ def gen_jwt
   JWT.encode payload, 'secret', 'HS256'
 end
 
-def connect(jwt)
-  conn = Bunny.new :user => jwt, :log_level => Logger::FATAL
-  conn.start.create_channel.queue 'celery', :passive => true
-end
-
 def main
   begin
-    jwt = gen_jwt
-    q = connect jwt
+    conn = Bunny.new :user => gen_jwt, :log_level => Logger::FATAL
+    q = conn.start.create_channel.queue 'celery', :passive => true
     q.subscribe do |delivery_info, properties, payload|
       puts "Received #{payload}, properties: #{properties}"
     end
@@ -28,6 +23,8 @@ def main
     puts error
   else
     puts "Success!"
+  ensure
+    conn.stop
   end
 end
 
