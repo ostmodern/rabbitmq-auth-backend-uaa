@@ -24,14 +24,8 @@ def main
     q.subscribe do |delivery_info, properties, payload|
       puts "Received #{payload}, properties: #{properties}"
     end
-  rescue Bunny::TCPConnectionFailedForAllHosts => error
-    puts "Failed to connect: #{error}"
-  rescue Bunny::AuthenticationFailureError => error
-    puts "Failed to authenticate: #{error}"
-  rescue Bunny::NotAllowedError => error
-    puts "Connection forbidden: #{error}"
-  rescue Bunny::AccessRefused => error
-    puts "Access refused: #{error}"
+  rescue => error
+    puts error
   else
     puts "Success!"
   end
